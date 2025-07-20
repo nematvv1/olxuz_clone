@@ -108,7 +108,11 @@
   "ad": "Eʼlon",
   "removed_from_favorites": "Yoqtirilganlardan olib tashlandi",
   "new_badge": "Yangi",
-  "dark_mode": "Tungi rejim"
-
-
+  "dark_mode": "Tungi rejim",
+  "app_feedback": "Ilova haqida fikr",
+  "feedback_hint": "Fikringizni yozing...",
+  "send_feedback": "Yuborish",
+  "feedback_sent": "Fikringiz yuborildi!",
+  "about_app": "Ilova haqida",
+  "write_feedback": "Fikringizni yozing..."
 }

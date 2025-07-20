@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 import '../FavoriteProvider.dart';
+import '../add_banner.dart';
+import '../bannerWidget.dart';
 import '../services/favorite_service.dart';
 import '../models/ads_model.dart';
 import '../models/app_colors.dart';
@@ -16,6 +17,7 @@ import 'detail_page.dart';
 import 'add_detial_page.dart';
 import 'category_detail_page.dart';
 import 'my_elon.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -75,6 +77,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final isAdmin = user != null && user.email == 'nematvv1@gmail.com';
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final filteredAds = ads.where((ad) {
       final name = ad.name?.toLowerCase() ?? '';
@@ -89,6 +94,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(right: 20, left: 20, top: 45),
             child: _buildTopBar(isDark),
           ),
+          const SizedBox(height: 16),
           Expanded(
             child: RefreshIndicator(
               onRefresh: loadAds,
@@ -111,10 +117,35 @@ class _HomePageState extends State<HomePage> {
                       mainAxisSpacing: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       children: categories
-                          .map((cat) =>
-                          _categoryItem(cat['key'], cat['icon'], isDark))
+                          .map((cat) => _categoryItem(
+                          cat['key'], cat['icon'], isDark))
                           .toList(),
                     ),
+                    const SizedBox(height: 20),
+
+                    /// ✅ Admin tugmasi
+                    if (isAdmin) ...[
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                  const AddBannerPage()),
+                            );
+                          },
+                          icon: const Icon(Icons.add),
+                          label: const Text("Reklama qo‘shish"),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
+                    /// Reklama Banner
+                    const BannerWidget(),
+
                     const SizedBox(height: 20),
                     Text("ads".tr(),
                         style: TextStyle(
@@ -155,7 +186,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: isDark ? Colors.grey[900] : Colors.white,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:  isDark ? Colors.white : Colors.black,
+        selectedItemColor: isDark ? Colors.white : Colors.black,
         unselectedItemColor: isDark ? Colors.white : Colors.black,
         showUnselectedLabels: true,
         currentIndex: 0,
@@ -226,13 +257,15 @@ class _HomePageState extends State<HomePage> {
               color: isDark ? Colors.grey[800] : Colors.white,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: isDark ? Colors.white : AppColors.c2, size: 24),
+            child: Icon(icon,
+                color: isDark ? Colors.white : AppColors.c2, size: 24),
           ),
           const SizedBox(height: 6),
           Text(
             key.tr(),
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12
+              ,
               color: isDark ? Colors.white : AppColors.c2,
             ),
             textAlign: TextAlign.center,
@@ -361,7 +394,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 4),
                     if (ad.description != null && ad.description!.isNotEmpty)
                       Text(ad.description!,
-                          maxLines: 4,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 11,

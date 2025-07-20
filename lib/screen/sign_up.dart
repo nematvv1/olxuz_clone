@@ -29,7 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   'ПРИВЕТСТВУЕМ В OLX!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 45,
+                    fontSize: 35,
                     letterSpacing: 2.0,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF003034),

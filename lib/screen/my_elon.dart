@@ -146,7 +146,7 @@ class _MyAdsPageState extends State<MyAdsPage> {
                                 const SizedBox(height: 4),
                                 Text(
                                   ad.description ?? '',
-                                  maxLines: 3,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),

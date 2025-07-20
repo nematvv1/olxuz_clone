@@ -107,8 +107,11 @@
   "removed_from_favorites": "Удалено из избранного",
   "no_results": "Результаты не найдены",
   "new_badge": "Новый",
-  "dark_mode": "Тёмный режим"
-
-
-
+  "dark_mode": "Тёмный режим",
+  "app_feedback": "Отзыв о приложении",
+  "feedback_hint": "Напишите ваше мнение...",
+  "send_feedback": "Отправить",
+  "feedback_sent": "Отзыв успешно отправлен!",
+  "about_app": "О приложении",
+  "write_feedback": "Напишите ваш отзыв..."
 }

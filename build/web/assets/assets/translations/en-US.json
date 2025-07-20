@@ -108,7 +108,11 @@
   "ad": "Ad",
   "removed_from_favorites": "Removed from favorites",
   "new_badge": "New",
-  "dark_mode": "Dark Mode"
-
-
+  "dark_mode": "Dark Mode",
+  "app_feedback": "Feedback about the app",
+  "feedback_hint": "Write your thoughts...",
+  "send_feedback": "Send",
+  "feedback_sent": "Feedback sent successfully!",
+  "about_app": "About the app",
+  "write_feedback": "Write your feedback..."
 }

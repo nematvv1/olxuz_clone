@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../models/app_colors.dart';
 import '../services/auth_services.dart';
 import '../services/thime_provider.dart';
+import 'feedbac.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -133,6 +134,23 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: textColor,
               ),
             ),
+            const SizedBox(height: 12),
+            Container(
+              decoration: BoxDecoration(
+                color: cardColor,
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.feedback_outlined, color: Colors.green),
+                title: Text("app_feedback".tr(), style: TextStyle(color: textColor)),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const FeedbackPage()));
+                },
+              ),
+            ),
+
             const SizedBox(height: 16),
 
             Container(

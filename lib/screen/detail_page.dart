@@ -315,6 +315,20 @@ class _DetailPageState extends State<DetailPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     const labelStyle = TextStyle(fontSize: 14, color: AppColors.c2);
     return Scaffold(
+      appBar:AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: isDark ? Colors.white : Colors.black,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
+        elevation: 0,
+      ),
+
+
+
       backgroundColor: isDark ? Colors.grey[900] : Colors.white,
       body: CustomScrollView(
         slivers: [
