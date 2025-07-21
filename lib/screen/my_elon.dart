@@ -82,7 +82,7 @@ class _MyAdsPageState extends State<MyAdsPage> {
               crossAxisCount: 2,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 0.70,
+              childAspectRatio: 0.65, // ✅ Biroz kichiklashtirildi
             ),
             itemBuilder: (context, index) {
               final data = docs[index].data() as Map<String, dynamic>;
@@ -153,16 +153,21 @@ class _MyAdsPageState extends State<MyAdsPage> {
                               ],
                             ),
                           ),
-                          const Spacer(),
+                          const SizedBox(height: 6),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  ad.location ?? '',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
+                                Expanded(
+                                  child: Text(
+                                    ad.location ?? '',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
+                                  ),
                                 ),
+                                const SizedBox(width: 4),
                                 Text(
                                   ad.createdAt != null
                                       ? DateFormat('dd MMM, HH:mm').format(DateTime.parse(ad.createdAt!))
@@ -172,6 +177,7 @@ class _MyAdsPageState extends State<MyAdsPage> {
                               ],
                             ),
                           ),
+                          const SizedBox(height: 6),
                         ],
                       ),
                     ),

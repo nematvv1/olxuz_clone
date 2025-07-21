@@ -394,22 +394,37 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 4),
                     if (ad.description != null && ad.description!.isNotEmpty)
                       Text(ad.description!,
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 11,
                               color:
                               isDark ? Colors.white60 : Colors.black54)),
                     const Spacer(),
-                    Text(ad.location ?? '',
-                        style: TextStyle(
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            ad.location ?? '',
+                            style: TextStyle(
+                              color: isDark ? Colors.white60 : AppColors.c2,
+                              fontSize: 11,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          _formatDate(ad.createdAt),
+                          style: TextStyle(
                             color: isDark ? Colors.white60 : AppColors.c2,
-                            fontSize: 11)),
-                    const SizedBox(height: 2),
-                    Text(_formatDate(ad.createdAt),
-                        style: TextStyle(
-                            color: isDark ? Colors.white60 : AppColors.c2,
-                            fontSize: 11)),
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+
                   ],
                 ),
               ),

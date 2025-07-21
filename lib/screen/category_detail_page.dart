@@ -131,7 +131,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                                 const SizedBox(height: 4),
                                 Text(
                                   ad.description ?? '',
-                                  maxLines: 3,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 11,

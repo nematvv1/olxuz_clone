@@ -50,81 +50,96 @@ class _AdDetailPageState extends State<AdDetailPage> {
   @override
   Widget build(BuildContext context) {
     String formattedDate = widget.ad.createdAt != null
-        ? DateFormat('yyyy-MM-dd HH:mm')
-        .format(DateTime.parse(widget.ad.createdAt!))
+        ? DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(widget.ad.createdAt!))
         : 'no_date'.tr();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            widget.ad.imageUrl != null && widget.ad.imageUrl!.isNotEmpty
-                ? Image.network(
-              widget.ad.imageUrl!,
-              width: double.infinity,
-              height: 250,
-              fit: BoxFit.cover,
-            )
-                : Container(
-              width: double.infinity,
-              height: 250,
-              color: Colors.grey[300],
-              child: const Icon(Icons.image_not_supported, size: 80),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.ad.name ?? '',
-                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "price".tr() + ": ${widget.ad.price ?? 'unknown'.tr()}",
-                    style: TextStyle(fontSize: 18, color: Colors.green[700]),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                widget.ad.imageUrl != null && widget.ad.imageUrl!.isNotEmpty
+                    ? Image.network(
+                  widget.ad.imageUrl!,
+                  width: double.infinity,
+                  height: 250,
+                  fit: BoxFit.cover,
+                )
+                    : Container(
+                  width: double.infinity,
+                  height: 250,
+                  color: Colors.grey[300],
+                  child: const Icon(Icons.image_not_supported, size: 80),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.location_on, size: 20, color: Colors.grey),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          widget.ad.location ?? 'no_location'.tr(),
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(Icons.calendar_today, size: 20, color: Colors.grey),
-                      const SizedBox(width: 4),
                       Text(
-                        formattedDate,
+                        widget.ad.name ?? '',
+                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "price".tr() + ": ${widget.ad.price ?? 'unknown'.tr()}",
+                        style: TextStyle(fontSize: 18, color: Colors.green[700]),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on, size: 20, color: Colors.grey),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              widget.ad.location ?? 'no_location'.tr(),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.calendar_today, size: 20, color: Colors.grey),
+                          const SizedBox(width: 4),
+                          Text(
+                            formattedDate,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "description".tr(),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        widget.ad.description ?? "no_description".tr(),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    "description".tr(),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    widget.ad.description ?? "no_description".tr(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
+                ),
+              ],
+            ),
+          ),
+          // Back arrow icon (Positioned top-left)
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 10,
+            left: 10,
+            child: CircleAvatar(
+              backgroundColor: Colors.black.withOpacity(0.5),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -137,8 +152,7 @@ class _AdDetailPageState extends State<AdDetailPage> {
                     context: context,
                     builder: (_) => AlertDialog(
                       title: Text("contact".tr()),
-                      content: Text(
-                          "phone".tr() + ": ${widget.ad.userNumber ?? 'unknown'.tr()}"),
+                      content: Text("phone".tr() + ": ${widget.ad.userNumber ?? 'unknown'.tr()}"),
                       actions: [
                         TextButton(
                           child: Text("close".tr()),
@@ -163,8 +177,7 @@ class _AdDetailPageState extends State<AdDetailPage> {
                   isFavorite ? Icons.favorite : Icons.favorite_border,
                   color: isFavorite ? Colors.red : Colors.grey,
                 ),
-                label: Text("save".tr(),
-                    style: const TextStyle(color: Colors.black)),
+                label: Text("save".tr(), style: const TextStyle(color: Colors.black)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey[300],
                 ),

@@ -1,3 +1,4 @@
+// importlar o'zgartirilmagan
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/intl.dart';
@@ -65,9 +66,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
             itemCount: ads.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 0.7,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.65, // ⚠️ muhim: sig‘ishi uchun kichikroq qildik
             ),
             itemBuilder: (context, index) {
               final adMap = ads[index];
@@ -98,99 +99,85 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     ],
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                            child: Image.network(
-                              ad.imageUrl ?? '',
-                              height: 140,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => Container(
-                                height: 140,
-                                color: Colors.grey[800],
-                                child: const Center(child: Icon(Icons.image_not_supported)),
-                              ),
-                            ),
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                        child: Image.network(
+                          ad.imageUrl ?? '',
+                          height: 120, // ⚠️ kamaytirdik
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            height: 120,
+                            color: Colors.grey[800],
+                            child: const Center(child: Icon(Icons.image_not_supported)),
                           ),
-                          Positioned(
-                            top: 8,
-                            right: 8,
-                            child: GestureDetector(
-                              onTap: () async {
-                                await FavoriteService.removeFavorite(adId);
-                                _showFlush("removed_from_favorites".tr());
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black.withOpacity(0.6),
-                                ),
-                                padding: const EdgeInsets.all(6),
-                                child: const Icon(Icons.favorite, color: Colors.red, size: 20),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(ad.name ?? '',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
-                              const SizedBox(height: 4),
-                              if ((ad.description ?? '').isNotEmpty)
-                                Text(
-                                  ad.description!,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: textTheme.bodySmall?.copyWith(
-                                    color: isDark ? Colors.grey[400] : Colors.grey[600],
-                                  ),
-                                ),
-                              const SizedBox(height: 6),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: Colors.grey.shade700,
-                                ),
-                                child: Text(
-                                  "new_badge".tr(),
-                                  style: textTheme.labelSmall?.copyWith(color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              ad.name ?? '',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 4),
+                            if ((ad.description ?? '').isNotEmpty)
+                              Text(
+                                ad.description!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: textTheme.bodySmall?.copyWith(
+                                  color: isDark ? Colors.grey[400] : Colors.grey[600],
                                 ),
                               ),
-                              const SizedBox(height: 6),
-                              Text("${ad.price} сум",
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    color: Colors.greenAccent,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              const Spacer(),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(ad.location ?? '',
-                                      style: textTheme.bodySmall?.copyWith(color: Colors.grey)),
-                                  Text(
-                                    ad.createdAt != null
-                                        ? DateFormat('dd MMM, HH:mm')
-                                        .format(DateTime.parse(ad.createdAt!))
-                                        : '',
+                            const SizedBox(height: 6),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: Colors.grey.shade700,
+                              ),
+                              child: Text(
+                                "new_badge".tr(),
+                                style: textTheme.labelSmall?.copyWith(color: Colors.white),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              "${ad.price} сум",
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: Colors.greenAccent,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    ad.location ?? '',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: textTheme.bodySmall?.copyWith(color: Colors.grey),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  ad.createdAt != null
+                                      ? DateFormat('dd MMM, HH:mm')
+                                      .format(DateTime.parse(ad.createdAt!))
+                                      : '',
+                                  style: textTheme.bodySmall?.copyWith(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
